@@ -3,7 +3,7 @@
 ### Descrição da Abordagem Tomada
 Foram utilizados dados de 2015 a 2019 com o objetivo de desenvolver um modelo capaz de classificar o principal ponto de problema nas reclamações. A estratégia adotada consistiu na utilização da coluna `COMPDESC` — que indica os componentes com problemas — para definir as classes de classificação, baseando-se nos componentes mais frequentes. Em seguida, o modelo foi treinado para classificar as reclamações a partir da coluna `CDESCR`, que contém a descrição textual das queixas.
 
-![My Image](project_model.png)
+![My Image](/diagrams/project_model.png)
 
 ## Etapas Tomadas
 
