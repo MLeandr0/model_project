@@ -12,6 +12,7 @@ Primeiramente, foi baixado o arquivo txt de dados e após uma conversão para cs
 
 ![Classes Size](/diagrams/classes.png){ width=150px }
 ![Confusion Matrix](/diagrams/matrix.png){ width=150px }
+![Scores](/diagrams/scores.png){ width=150px }
 
 
 1. **Engenharia de Features:**

@@ -6,9 +6,34 @@ from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.base import BaseEstimator, TransformerMixin
+import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 import joblib
 import os
+
+def plot_classification_report(y_true, y_pred):
+    report = classification_report(y_true, y_pred, output_dict=True)
+    categories = list(report.keys())[:-3]  # Exclude 'accuracy', 'macro avg', and 'weighted avg'
+    metrics = ['precision', 'recall', 'f1-score']
+    
+    values = {metric: [report[cat][metric] for cat in categories] for metric in metrics}
+    x = np.arange(len(categories))
+    width = 0.25  # Bar width
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for i, metric in enumerate(metrics):
+        ax.bar(x + i * width, values[metric], width, label=metric)
+    
+    ax.set_xlabel('Categories')
+    ax.set_ylabel('Scores')
+    ax.set_title('Classification Report Metrics')
+    ax.set_xticks(x + width)
+    ax.set_xticklabels(categories, rotation=45, ha='right')
+    ax.legend()
+    
+    plt.tight_layout()
+    plt.show()
 
 class TextMerger(BaseEstimator, TransformerMixin):
     def __init__(self):
@@ -56,6 +81,8 @@ def train_and_save_model(data_path='data\complaints_with_category.csv', save_dir
     y_pred = pipeline.predict(X_test)
     print("Accuracy:", accuracy_score(y_test, y_pred))
     print(classification_report(y_test, y_pred))
+
+    plot_classification_report(y_test, y_pred)
     
     os.makedirs(save_dir, exist_ok=True)
     joblib.dump(pipeline, os.path.join(save_dir, 'complaint_classification_pipeline.pkl'))
