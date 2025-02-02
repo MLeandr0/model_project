@@ -40,7 +40,7 @@ def build_pipeline():
 
     return pipeline
 
-def train_and_save_model(data_path='complains_with_category.csv', save_dir="saved_file/"):
+def train_and_save_model(data_path='data\complaints_with_category.csv', save_dir="saved_file/"):
 
     df = pd.read_csv(data_path, low_memory=False)
     df = df.dropna()

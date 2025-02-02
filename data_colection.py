@@ -12,7 +12,7 @@ DOWNLOAD_DIR = "downloads"
 EXTRACT_DIR = "extracted"
 DATA_DIR = "data"
 DOWNLOADED_DATA = "raw_complaints.csv"
-OUTPUT_FILE = "data/complaints_preprocessed.csv"
+OUTPUT_FILE = "data/complaints_with_category.csv"
 
 HEADER = [
     "CMPLID", "ODINO", "MFR_NAME", "MAKETXT", "MODELTXT", "YEARTXT", "CRASH",
@@ -92,6 +92,32 @@ def encode_categorical_columns(df, columns_to_encode):
         df[col] = label_encoder.fit_transform(df[col].astype(str))
     return df
 
+compdesc_to_category = {
+    "air bags": "air bags",
+    "electrical system": "electrical system",
+    "engine": "engine",
+    "power train": "power train",
+    "unknown": "unknown",
+    "steering": "steering",
+    "brakes": "brakes",
+    "suspension": "suspension",
+    "structure": "structure",
+    "seat": "seat & belts",
+    "tires": "tires & wheels",
+    "wheels": "tires & wheels",
+    "fuel": "fuel system"
+}
+
+def map_category(description):
+    if pd.isna(description):  
+        return "others"
+    
+    description = description.lower()
+    for keyword, category in compdesc_to_category.items():
+        if keyword in description:
+            return category
+    return "others"
+
 def download_data():
     nltk.download('stopwords')
     stop_words = set(stopwords.words('english'))
@@ -127,6 +153,9 @@ def download_data():
     
     columns_to_encode = ['MAKETXT', 'MODELTXT', 'CRASH', 'FIRE', 'DEATHS', 'FAILDATE', 'FIRE', 'MEDICAL_ATTN', 'ORIG_OWNER_YN']
     df = encode_categorical_columns(df, columns_to_encode)
+    
+    # Apply category mapping to 'COMPDESC'
+    df['CATEGORY'] = df['COMPDESC'].apply(map_category)
     
     df.to_csv(OUTPUT_FILE, index=False)
     print(f"Preprocessed data saved as {OUTPUT_FILE}")
