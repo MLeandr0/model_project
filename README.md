@@ -10,11 +10,8 @@ Foram utilizados dados de 2015 a 2019 com o objetivo de desenvolver um modelo ca
 1. **Aquisição e Pré-processamento de Dados:**
 Primeiramente, foi baixado o arquivo txt de dados e após uma conversão para csv para uma melhor vizualização, eu inspecionei o documento e percebi que as colunas não possuiam um header, por isso adicionei um de acordo com um dicionário presente na própria página do [NHTSA](https://static.nhtsa.gov/odi/ffdd/cmpl/Import_Instructions_Excel_All.pdf). Em seguida removi as colunas com uma maior quantidade de valores ausentes assim como colunas que eu não vi como seriam usadas no meu modelo. Além disso, nessa etapa, tratei os textos deixando todos minusculos, removendo números, espaços ausentes e também convertir valores de string para númericos, para assim poder usar mais facilmente depois. Por fim, removi as stop words em inglês presentes na coluna de reclamações.
 
-![Classes Size](/diagrams/classes.png)
-![Confusion Matrix](/diagrams/matrix.png)
-
-![Classes Size](/diagrams/classes.png){ width=300px }
-![Confusion Matrix](/diagrams/matrix.png){ width=300px }
+![Classes Size](/diagrams/classes.png){ width=150px }
+![Confusion Matrix](/diagrams/matrix.png){ width=150px }
 
 
 1. **Engenharia de Features:**
