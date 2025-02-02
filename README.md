@@ -10,18 +10,17 @@ Foram utilizados dados de 2015 a 2019 com o objetivo de desenvolver um modelo ca
 1. **Aquisição e Pré-processamento de Dados:**
 Primeiramente, foi baixado o arquivo txt de dados e após uma conversão para csv para uma melhor vizualização, eu inspecionei o documento e percebi que as colunas não possuiam um header, por isso adicionei um de acordo com um dicionário presente na própria página do [NHTSA](https://static.nhtsa.gov/odi/ffdd/cmpl/Import_Instructions_Excel_All.pdf). Em seguida removi as colunas com uma maior quantidade de valores ausentes assim como colunas que eu não vi como seriam usadas no meu modelo. Além disso, nessa etapa, tratei os textos deixando todos minusculos, removendo números, espaços ausentes e também convertir valores de string para númericos, para assim poder usar mais facilmente depois. Por fim, removi as stop words em inglês presentes na coluna de reclamações.
 
+2. **Engenharia de Features:**
+A partir desse momento entrei em um território que eu tinha pouca experiência. Então após pesquisar muito, resolvi fazer uma vetorização TD-IDF como recomendado pela atividade, para converter o texto em uma matriz de características TF-IDF, limitando o número máximo de características para 10.000 e removendo stop words em inglês. Em seguida fiz o One-Hot para as principais features categoricas e uma normalização para o ano do problema. Implementei a classe TextMerger para combinar as colunas `CDESCR` e `COMPDESC` de texto relevantes em uma única entrada.
+
+3. **Treinamento do Modelo:**
+Criei uma pipeline integrando as etapas pré-processamento e classificação. Usei a regressão logística principalmente por conta da sua eficiente, pois todas as minhas outras ideias e testes demoravam demais. Em seguida, avaliei o modelo usando `accuracy_score` e gerei um relatório que no fim incluia precisão, recall e F1-score para cada classe criada. No fim, utilizei a biblioteca joblib para salvar o modelo treinado e retutilizar caso eu achasse necessário por algum motivo.
+
+5. **Relatório e Análise Estatística:**
+
 ![Classes Size](/diagrams/classes.png){ width=150px }
 ![Confusion Matrix](/diagrams/matrix.png){ width=150px }
 ![Scores](/diagrams/scores.png){ width=150px }
-
-
-1. **Engenharia de Features:**
-A partir desse momento entrei em um território que eu tinha pouca experiência. Então após pesquisar muito, resolvi fazer uma vetorização TD-IDF como recomendado pela atividade, para converter o texto em uma matriz de características TF-IDF, limitando o número máximo de características para 10.000 e removendo stop words em inglês. Em seguida fiz o One-Hot para as principais features categoricas e uma normalização para o ano do problema. Implementei a classe TextMerger para combinar as colunas `CDESCR` e `COMPDESC` de texto relevantes em uma única entrada.
-
-1. **Treinamento do Modelo:**
-Criei uma pipeline integrando as etapas pré-processamento e classificação. Usei a regressão logística principalmente por conta da sua eficiente, pois todas as minhas outras ideias e testes demoravam demais. Em seguida, avaliei o modelo usando `accuracy_score` e gerei um relatório que no fim incluia precisão, recall e F1-score para cada classe criada. No fim, utilizei a biblioteca joblib para salvar o modelo treinado e retutilizar caso eu achasse necessário por algum motivo.
-
-1. **Relatório e Análise Estatística:**
 
 **Ponto Forte:**
 - Acredito que um ponto forte foi a velocidade de treinamento em comparação com todas as minhas tentativas ao longo da semana. Como foi meu primeiro contato com um treinamento de um modelo, eu queria fazer algo mais simples porém funcional, uma vez que eu só tive experiência com tratamento e coleta dos dados.
